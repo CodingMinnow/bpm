@@ -163,7 +163,7 @@ def gettoken(request):
 
             # Spotifyuser already exists in the database
             if SpotifyUser.objects.filter(spotify_user_id__exact = res_acct_json['id']).exists() and res_acct_json['id'] != request.user.spotifyuser.spotify_user_id:
-                messages.error(request, "This Spotify account is already linked to another bpm account. Try again after unlinking the bpm app from your Spotify account.")
+                messages.error(request, "This Spotify account is already linked to another bpm account. Try again after unlinking the bpm app from your Spotify account at https://www.spotify.com/us/account/apps/.")
                 return redirect('/')
             
             # Update database with user's spotify account info

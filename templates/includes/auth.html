@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+    <span class="px-2">Hi {{ user.username }}!</span>
+    <a class="btn btn-primary" href="{% url 'logout' %}">Log Out</a>
+{% else %}
+    <a class="btn btn-outline-primary" href="{% url 'login' %}">Login</a> |
+    <a class="btn btn-primary" href="{% url 'register' %}">Register</a>
+{% endif %}

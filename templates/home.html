@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block auth %}
+{% include 'includes/auth.html' %}
+{% endblock %}
+
+{% block content %}
+{# user authenticated/authorized Spotify account #}
+{% if user.spotifyuser.spotify_user_id %}
+  <h1>My Dashboard</h1>
+
+  <p class="text-sm-right">Total: {{ user.spotifyuser.bpmplaylist_set.all.count }}</p>
+
+  <div class="table-responsive"></div>
+    <table class="table table-striped table-sm">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">BPM - start</th>
+        <th scope="col">BPM - end</th>
+        <th scope="col">Multiples allowed?</th>
+        <th scope="col">Actions</th>
+      </tr>
+      {% for playlist in user.spotifyuser.bpmplaylist_set.all %}
+        <tr>
+          <td>{{playlist.name}}</td>
+          <td>{{playlist.bpm_start}}</td>
+          <td>{{playlist.bpm_end}}</td>
+          <td>{{playlist.multiples_bpm}}</td>
+          <td>
+            <a class="btn btn-dark btn-sm" href="{% url 'updateplaylist' playlist.playlist_id %}">Update</a>
+            <a class="btn btn-dark btn-sm" href="{% url 'deleteplaylist' playlist.playlist_id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <a class="btn btn-primary" href="{% url 'createplaylist' %}">Create bpm playlist</a>
+
+{% else %}
+  <p>No Spotify account linked.</p>
+  <a class="btn btn-primary" href="{% url 'spotifylogin' %}">Login to Spotify Account</a> |
+{% endif %}
+{% endblock %}

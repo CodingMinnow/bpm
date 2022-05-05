@@ -30,12 +30,12 @@ class BpmPlaylist(models.Model):
     
     spotify_user = models.ForeignKey(SpotifyUser, on_delete=models.PROTECT)
     playlist_id = models.CharField(max_length=200, unique=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, verbose_name="Playlist name")
     created_datetime = models.DateTimeField(default=timezone.now)
     last_update_datetime = models.DateTimeField(default=timezone.now)
-    bpm_start = models.PositiveSmallIntegerField()
-    bpm_end = models.PositiveSmallIntegerField()
-    multiples_bpm = models.BooleanField(default=True)
+    bpm_start = models.PositiveSmallIntegerField(verbose_name="Starting bpm", help_text="Please enter a positive integer. It must be smaller or equal to the ending bpm.")
+    bpm_end = models.PositiveSmallIntegerField(verbose_name="Ending bpm", help_text="Please enter a positive integer. It must be greater or equal to the starting bpm.")
+    multiples_bpm = models.BooleanField(default=True, verbose_name="Include multiples", help_text="If you select this, tracks with bpms that are multiples of the ones in the selected bpm range will also be added to the playlist. This means faster songs may be added, but slower songs will not be added.")
 
     # class Meta:
     #     constraints = [

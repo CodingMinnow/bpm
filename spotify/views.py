@@ -86,14 +86,14 @@ def spotifylogin(request):
     
     # Request authorization from Spotify API
     print('\nRequest authorization from Spotify API\n')
-    settings.SPOTIFY_STATE =  ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(16))
+    request.session['spotify_api_state'] =  ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(16))
 
     req_params = {
         'response_type': 'code',
         'client_id': settings.SPOTIFY_APP_ID,
         'scope': settings.SPOTIFY_SCOPE,
         'redirect_uri': request.build_absolute_uri(settings.SPOTIFY_REDIRECT_URL),
-        'state': settings.SPOTIFY_STATE,
+        'state': request.session['spotify_api_state'],
         'show_dialog': True
     }
     return redirect('https://accounts.spotify.com/authorize?' + urlencode(req_params))    
@@ -113,7 +113,7 @@ def gettoken(request):
         return redirect('/')
 
     # Check state
-    if settings.SPOTIFY_STATE == request.GET.get('state'):
+    if request.session['spotify_api_state'] == request.GET.get('state'):
         print('\nCheck state\n')
         # check if authorization failed (error or user didn't accept authorization request)
         # if there is an error, the error query will exist

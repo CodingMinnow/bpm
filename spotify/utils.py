@@ -32,6 +32,9 @@ def spotify_status_code_handler(req, res, err):
         req.user.spotifyuser.expiration = timezone.make_aware(datetime.datetime.min, ZoneInfo('UTC'))
         req.user.spotifyuser.save()
 
+        # # save the current url to sessions
+        # req.session['expired_token_redirect_url'] = req.
+
         return redirect('/spotifylogin')
     # Exceeded rate limit
     elif res.status_code == 429:

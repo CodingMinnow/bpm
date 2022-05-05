@@ -12,7 +12,6 @@ The Django framework was used to create this app.
 There were a few challenges with this app:
 1. Keeping in sync the app's database and Spotify's database on bpm playlists
 2. Handling the rate limit on calls to the Spotify API
-3. 
 
 bpm can be used for much more than just exercise (e.g. lullaby, study, etc.); it's just a matter of finding the appropriate and desired bpm range. 
 
@@ -32,3 +31,9 @@ First, you need to register as a Developer on [Spotify for Developers site](http
 
 You're also going to need to set up a database. I used MySQL. Replace the details of the DATABASE variable in settings.py with your database info. Follow the [Djano tutorial on database setuo](https://docs.djangoproject.com/en/4.0/intro/tutorial02/) if you need help.
 
+
+## Upcoming features
+* Expand source from Liked Songs to any other playlsit
+* Limit playlists by time
+* Expand dashboard to display graphs/charts of playlist compositions
+* Collecting steps per minute via phone or Fitbit

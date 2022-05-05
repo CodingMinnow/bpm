@@ -92,7 +92,7 @@ def spotifylogin(request):
         'response_type': 'code',
         'client_id': settings.SPOTIFY_APP_ID,
         'scope': settings.SPOTIFY_SCOPE,
-        'redirect_uri': settings.SPOTIFY_REDIRECT_URL,
+        'redirect_uri': request.build_absolute_uri(settings.SPOTIFY_REDIRECT_URL),
         'state': settings.SPOTIFY_STATE,
         'show_dialog': True
     }
@@ -127,7 +127,7 @@ def gettoken(request):
         # Request access token from Spotify API       
         auth_options = {
             'code': request.GET.get("code"),
-            'redirect_uri': settings.SPOTIFY_REDIRECT_URL, # used for validation only (there is no actual redirection)
+            'redirect_uri': request.build_absolute_uri(settings.SPOTIFY_REDIRECT_URL), # used for validation only (there is no actual redirection)
             'grant_type': 'authorization_code'
         }
         auth_header = {

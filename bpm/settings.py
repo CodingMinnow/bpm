@@ -154,7 +154,7 @@ LOGOUT_REDIRECT_URL = "home"
 SPOTIFY_APP_ID = config('SPOTIFY_APP_ID', default='')
 SPOTIFY_APP_SECRET = config('SPOTIFY_APP_SECRET', default='')
 SPOTIFY_STATE = ''
-SPOTIFY_REDIRECT_URL = "gettoken"
+SPOTIFY_REDIRECT_URL = "/gettoken"
 SPOTIFY_SCOPE = 'user-read-private user-read-email user-library-modify user-library-read playlist-read-collaborative playlist-modify-public playlist-read-private playlist-modify-private'
 SPOTIFY_RETRY_AFTER_TIME = timezone.make_aware(datetime.datetime.min, ZoneInfo('UTC'))
 

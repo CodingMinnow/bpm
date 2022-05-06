@@ -82,7 +82,17 @@ def spotifylogin(request):
                 request.user.spotifyuser.expiration_datetime = timezone.now() + datetime.timedelta(seconds=res_json['expires_in'])
                 request.user.spotifyuser.save()
                 
-                return redirect('/')
+                if request.session['expired_token_redirect_url']:
+                    expired_token_redirect_url = request.session['expired_token_redirect_url']
+                    request.session['expired_token_redirect_url'] = ''
+
+                    # Temporarily handle redirecting to createplaylist 
+                    if expired_token_redirect_url == '/createplaylist/':
+                        messages.error(request,"There has been an error. Please try again.")
+
+                    return redirect(expired_token_redirect_url)
+                else:
+                    return redirect('/')
     
     # Request authorization from Spotify API
     print('\nRequest authorization from Spotify API\n')
@@ -175,11 +185,22 @@ def gettoken(request):
             request.user.spotifyuser.scope = settings.SPOTIFY_SCOPE
             request.user.spotifyuser.date_auth = timezone.now()
             request.user.spotifyuser.save()
-            
-            messages.success(request, "Successfully linked to your Spotify account!")
     
     print('\nredirecting\n')
-    return redirect('/')
+    
+    if request.session['expired_token_redirect_url']:
+        expired_token_redirect_url = request.session['expired_token_redirect_url']
+        request.session['expired_token_redirect_url'] = ''
+
+        print(expired_token_redirect_url)
+        # Temporarily handle redirecting to createplaylist 
+        if expired_token_redirect_url == '/createplaylist/':
+            messages.error(request,"There has been an error. Please try again.")
+
+        return redirect(expired_token_redirect_url)
+    else:
+        messages.success(request, "Successfully linked to your Spotify account!")
+        return redirect('/')
 
 """
 Create a new bpm playlist
@@ -187,6 +208,7 @@ Generates a form to create a playlist and processes the form submitted by the us
 """
 @login_required
 def createplaylist(request):
+
     # Check if still within rate limits
     retry = retry_time_left()
     if retry['time']:
@@ -195,6 +217,9 @@ def createplaylist(request):
 
     # Check if user signed into spotify account and if access_token exists
     if request.user.spotifyuser.spotify_user_id == '' or request.user.spotifyuser.access_token == '':
+        # save the current url to sessions
+        request.session['expired_token_redirect_url'] = request.path
+
         return redirect('/spotifylogin')
 
     # POST request - process the form data
@@ -357,6 +382,9 @@ def updateplaylist(request, playlist_id=None):
 
     # Check if user signed into spotify account and if access_token exists
     if request.user.spotifyuser.spotify_user_id == '' or request.user.spotifyuser.access_token == '':
+        # save the current url to sessions
+        request.session['expired_token_redirect_url'] = request.path
+
         return redirect('/spotifylogin')
 
     # Identify playlist in database
@@ -544,6 +572,9 @@ def deleteplaylist(request, playlist_id=None):
 
     # Check if user signed into spotify account and if access_token exists
     if request.user.spotifyuser.spotify_user_id == '' or request.user.spotifyuser.access_token == '':
+        # save the current url to sessions
+        request.session['expired_token_redirect_url'] = request.path
+
         return redirect('/spotifylogin')
 
     # Identify playlist in database

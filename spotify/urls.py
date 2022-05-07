@@ -1,4 +1,4 @@
-from django.urls import include, path
+from django.urls import path
 
 from . import views
 
@@ -7,6 +7,5 @@ urlpatterns = [
     path('gettoken/', views.gettoken, name='gettoken'),
     path('createplaylist/', views.createplaylist, name='createplaylist'),
     path('update/<playlist_id>', views.updateplaylist, name='updateplaylist'),
-    path('delete/<playlist_id>', views.deleteplaylist, name='deleteplaylist'),
-    # path('exceededrate/', views.exceededrate, name='exceededrate')
+    path('delete/<playlist_id>', views.deleteplaylist, name='deleteplaylist')
 ]

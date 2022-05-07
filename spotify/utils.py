@@ -11,6 +11,7 @@ import json
 from zoneinfo import ZoneInfo
 
 """
+Helper function for retry-time calculation for Spotify API calls
 Returns a dictionary with the time left until Spotify API can be called again and the corresponding message to display
 """
 def retry_time_left():
@@ -19,6 +20,7 @@ def retry_time_left():
         return {'time': divmod(diff_sec, 60)[0], 'msg': f"Y'all showed us too much love, so Spotify told us to chill out. Try again in {divmod(diff_sec, 60)[0]} minutes."}
 
     return {'time': 0, 'msg': ''}
+
 
 """
 Handles status code errors from Spotify API calls

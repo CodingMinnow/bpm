@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import CheckConstraint, Q, F
+# from django.db.models import CheckConstraint, Q, F
 from django.utils import timezone
 
 from annoying.fields import AutoOneToOneField
@@ -13,7 +13,6 @@ class SpotifyUser(models.Model):
     def __str__(self):
         return self.spotify_display_name
     
-    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     user = AutoOneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     spotify_user_id = models.CharField(max_length=50)
     spotify_display_name = models.CharField(max_length=191)

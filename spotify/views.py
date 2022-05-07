@@ -26,7 +26,7 @@ Authenticate/authorize Spotify account
 """
 @login_required()
 def spotifylogin(request):
-    # check if still within rate limits
+    # Check if still within rate limits
     retry = retry_time_left()
     if retry['time']:
         messages.error(request, retry['msg'])
@@ -36,7 +36,6 @@ def spotifylogin(request):
     if request.user.spotifyuser.spotify_user_id != '':
         # Check if access token is still valid
         if request.user.spotifyuser.access_token != '':
-            print("\nCheck if access token is still valid\n")
             header = {
                 'Authorization': 'Bearer ' + request.user.spotifyuser.access_token,
                 'Content-Type': 'application/json'
@@ -54,7 +53,6 @@ def spotifylogin(request):
 
         # Try to get access token using refresh token, if it exists
         if request.user.spotifyuser.refresh_token != '':
-            print("\nTry to get access token using refresh token\n")
             auth_options = {
                 'grant_type': 'refresh_token',
                 'refresh_token': request.user.spotifyuser.refresh_token
@@ -95,7 +93,6 @@ def spotifylogin(request):
                     return redirect('/')
     
     # Request authorization from Spotify API
-    print('\nRequest authorization from Spotify API\n')
     request.session['spotify_api_state'] =  ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(16))
 
     req_params = {
@@ -124,12 +121,9 @@ def gettoken(request):
 
     # Check state
     if request.session['spotify_api_state'] == request.GET.get('state'):
-        print('\nCheck state\n')
         # check if authorization failed (error or user didn't accept authorization request)
         # if there is an error, the error query will exist
-        # TO DO log this error
         e = request.GET.get('error', '')
-        print(f"\nError from Spotify authorization: {e}\n")
         if e != '':
             messages.error(request, "bpm wasn't authorized to access your Spotify account details.")
             raise PermissionDenied
@@ -185,14 +179,11 @@ def gettoken(request):
             request.user.spotifyuser.scope = settings.SPOTIFY_SCOPE
             request.user.spotifyuser.date_auth = timezone.now()
             request.user.spotifyuser.save()
-    
-    print('\nredirecting\n')
-    
+        
     if request.session['expired_token_redirect_url']:
         expired_token_redirect_url = request.session['expired_token_redirect_url']
         request.session['expired_token_redirect_url'] = ''
 
-        print(expired_token_redirect_url)
         # Temporarily handle redirecting to createplaylist 
         if expired_token_redirect_url == '/createplaylist/':
             messages.error(request,"There has been an error. Please try again.")
@@ -562,6 +553,9 @@ def updateplaylist(request, playlist_id=None):
     
     return redirect('/')
 
+"""
+Deletes a bpm playlist
+"""
 @login_required
 def deleteplaylist(request, playlist_id=None):
     # Check if still within rate limits

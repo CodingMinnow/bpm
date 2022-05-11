@@ -29,7 +29,7 @@ The deployment is still in progress. Once deployed, I'll post the link here. For
 
 First, you need to register as a Developer on [Spotify for Developers site](https://developer.spotify.com/). Then, go to your [Dashboard](https://developer.spotify.com/dashboard/applications) to create an app and get a Client ID and Client Secret. Also, while you're there, change the redirect URI to http://127.0.0.1:8000/gettoken (replace the domain name with the one that you're using). Take the Client ID and Client Secret and add to a .env file in your root project folder.
 
-You're also going to need to set up a database. I used MySQL. Replace the details of the DATABASE variable in settings.py with your database info. Follow the [Djano tutorial on database setuo](https://docs.djangoproject.com/en/4.0/intro/tutorial02/) if you need help.
+You're also going to need to set up a database. I used MySQL. Replace the details of the DATABASE variable in settings.py with your database info. Follow the [Djano tutorial on database setup](https://docs.djangoproject.com/en/4.0/intro/tutorial02/) if you need help.
 
 
 ## Upcoming features

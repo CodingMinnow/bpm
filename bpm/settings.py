@@ -172,3 +172,4 @@ EMAIL_HOST = config('EMAIL_HOST', default='')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_PORT = config('EMAIL_PORT', default='')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # for production only!

@@ -39,7 +39,7 @@ class RegisterView(SuccessMessageMixin, CreateView):
             })
             user.email_user(subject, message)
 
-            messages.success(request, ('Please Confirm your email to complete registration.'))
+            messages.success(request, ('Please check your email for a confirmation email. You must confirm your email to complete registration.'))
 
             return redirect('login')
 

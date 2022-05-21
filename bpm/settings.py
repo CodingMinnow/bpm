@@ -84,19 +84,15 @@ WSGI_APPLICATION = 'bpm.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-# when creating tables, in options, change init_command to
-# 'init_command': "SET sql_mode='STRICT_TRANS_TABLES';\ SET default_storage_engine=INNODB"
+# host must be set in windows. get from ‘host’ lines in pg_hba.conf
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'bpm',
         'USER': config('DB_USER', default=''),
         'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': '',
+        'HOST': 'localhost',
         'PORT': '',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
     }
 }
 

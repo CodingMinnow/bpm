@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, views
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
@@ -10,10 +10,14 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 
+
 from .forms import CustomUserCreationForm
 from .models import CustomUser
 from .tokens import account_activation_token
 
+"""
+View for registering new user
+"""
 class RegisterView(SuccessMessageMixin, CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login")
@@ -26,7 +30,7 @@ class RegisterView(SuccessMessageMixin, CreateView):
         if form.is_valid():
 
             user = form.save(commit=False)
-            user.is_active = False # Deactivate account till it is confirmed
+            user.is_active = False # Deactivate account untill it is confirmed
             user.save()
 
             current_site = get_current_site(request)
@@ -45,6 +49,9 @@ class RegisterView(SuccessMessageMixin, CreateView):
 
         return render(request, self.template_name, {'form': form})
 
+"""
+View to activate new user account
+"""
 class ActivateAccount(View):
 
     def get(self, request, uidb64, token, *args, **kwargs):
@@ -64,3 +71,9 @@ class ActivateAccount(View):
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('home')
+
+"""
+View for logging in
+"""
+class Login(views.LoginView):
+    

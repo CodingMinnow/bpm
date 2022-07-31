@@ -80,9 +80,14 @@ WSGI_APPLICATION = 'bpm.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # host must be set in windows. get from ‘host’ lines in pg_hba.conf
 
-# load_dotenv(find_dotenv())
+load_dotenv(find_dotenv())
 
-
+DB_USER = config('DB_USER', default='')
+DB_PASSWORD = config('DB_PASSWORD', default='')
+localDBUrl = f'postgres://{DB_USER}:{DB_PASSWORD}@localhost/bpm'
+DATABASES = {
+    'default': dj_database_url.config(default=localDBUrl, conn_max_age=600, ssl_require=False)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

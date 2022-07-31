@@ -7,5 +7,6 @@ urlpatterns = [
     path('gettoken/', views.gettoken, name='gettoken'),
     path('createplaylist/', views.createplaylist, name='createplaylist'),
     path('update/<playlist_id>', views.updateplaylist, name='updateplaylist'),
-    path('delete/<playlist_id>', views.deleteplaylist, name='deleteplaylist')
+    path('delete/<playlist_id>', views.deleteplaylist, name='deleteplaylist'),
+    path('syncplaylists/', views.syncplaylists, name='syncplaylists')
 ]

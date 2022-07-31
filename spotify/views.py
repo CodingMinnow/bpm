@@ -593,3 +593,47 @@ def deleteplaylist(request, playlist_id=None):
         playlist.delete()           
         messages.success(request, f'Playlist {playlist.name} was successfully deleted!')
         return redirect('/')
+
+"""
+Syncs up the app's bpm playlist database with Spotify's
+"""
+@login_required
+def syncplaylists(request):
+    # Get all of the user's playlists from Spotify
+    all_playlists = []
+    header = {
+        'Authorization': 'Bearer ' + request.user.spotifyuser.access_token,
+        'Content-Type': 'application/json'
+    }
+    url_playlists = 'https://api.spotify.com/v1/me/playlists?limit=50'
+    while True:
+        try:
+            res = requests.get(url_playlists, headers=header)
+            res.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            return spotify_status_code_handler(request, res, err)
+        except requests.exceptions.RequestException as err:
+            return redirect('/')
+        else:
+            res_json = res.json()
+            for playlist in res_json['items']:
+                all_playlists.append(playlist) ## FIND CORRECT KEYS
+            
+            # Stop loop after the last set of Liked Songs
+            if res_json['next'] == None:
+                break
+
+            # update url to next api call
+            url_playlists = res_json['next']
+            sleep(0.5)
+    
+    print(all_playlists)
+
+    # Check if all of the bpm playlists in the app's database exists in Spotify's database
+    # If doesn't exist, make inactive in app's database
+    # Also check to make sure playlist name matches
+
+    
+
+
+    return redirect('/')

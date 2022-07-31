@@ -80,6 +80,8 @@ WSGI_APPLICATION = 'bpm.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 # host must be set in windows. get from ‘host’ lines in pg_hba.conf
 
+load_dotenv(find_dotenv())
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'bpm',
         'USER': config('DB_USER', default=''),
         'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': 'localhost',
-        'PORT': '',
+        # 'HOST': 'localhost',
+        # 'PORT': '',
     }
 }
 

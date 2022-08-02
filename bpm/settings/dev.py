@@ -6,13 +6,4 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'bpm',
-#         'USER': config('DB_USER', default=''),
-#         'PASSWORD': config('DB_PASSWORD', default=''),
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

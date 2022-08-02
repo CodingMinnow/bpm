@@ -37,16 +37,7 @@ LOGGING = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'd835q0t02l41m8',
-#         'USER': 'jsvgcdmbjwvnjx',
-#         'PASSWORD': 'fa44f3e66765f61967fc97bf48cd8ebde781be6ad7783cef5ab0ef53a89cafa2',
-#         'HOST': 'ec2-3-213-228-206.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Heroku settings
 django_on_heroku.settings(locals(), staticfiles=False)

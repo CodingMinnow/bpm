@@ -37,8 +37,6 @@ LOGGING = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 # Heroku settings
 django_on_heroku.settings(locals(), staticfiles=False)
 del DATABASES['default']['OPTIONS']['sslmode']

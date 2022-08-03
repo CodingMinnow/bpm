@@ -180,7 +180,7 @@ def gettoken(request):
             request.user.spotifyuser.date_auth = timezone.now()
             request.user.spotifyuser.save()
         
-    if request.session['expired_token_redirect_url']:
+    if 'expired_token_redirect_url' in request.session and request.session['expired_token_redirect_url']:
         expired_token_redirect_url = request.session['expired_token_redirect_url']
         request.session['expired_token_redirect_url'] = ''
 

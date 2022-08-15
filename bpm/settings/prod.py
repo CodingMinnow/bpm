@@ -6,6 +6,7 @@ from .base import *
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
+print(f'DEBUG testing: {DEBUG}')
 
 ALLOWED_HOSTS = [
     'bpm-minnow.herokuapp.com',

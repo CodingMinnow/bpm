@@ -140,8 +140,8 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Login and logout urls
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 # Spotify auth
 SPOTIFY_APP_ID = config('SPOTIFY_APP_ID', default='')
